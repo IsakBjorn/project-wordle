@@ -3,8 +3,8 @@ import React from "react";
 function Guesses({ guesses }) {
   return (
     <div className="guess-results">
-      {guesses.map(({ id, guess }) => (
-        <p className={guess} key={id}>
+      {guesses.map((guess, index) => (
+        <p className="guess" key={index}>
           {guess}
         </p>
       ))}

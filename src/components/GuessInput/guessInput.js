@@ -1,15 +1,13 @@
 import React from "react";
 
-function InputBox({ handleNewGuess }) {
+function GuessInput({ handleNewGuess }) {
   const [guess, setGuess] = React.useState("");
   return (
     <form
       className="guess-input-wrapper"
       onSubmit={(e) => {
         e.preventDefault();
-        const guessInUppercase = guess.toUpperCase();
-        console.log(guessInUppercase);
-        handleNewGuess(guessInUppercase);
+        handleNewGuess(guess);
         setGuess("");
       }}
     >
@@ -20,11 +18,11 @@ function InputBox({ handleNewGuess }) {
         pattern="[a-zA-Z]{5}"
         title="5 letters only"
         onChange={(event) => {
-          setGuess(event.target.value);
+          setGuess(event.target.value.toUpperCase());
         }}
       />
     </form>
   );
 }
 
-export default InputBox;
+export default GuessInput;
