@@ -19,7 +19,7 @@ function Game() {
 
   return (
     <>
-      <Guesses guesses={guesses}></Guesses>
+      <Guesses guesses={guesses} correctAnswer={answer}></Guesses>
       <GuessInput handleNewGuess={handleNewGuess}></GuessInput>
     </>
   );
