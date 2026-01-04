@@ -4,10 +4,9 @@ import { sample } from "../../utils";
 import { WORDS } from "../../data";
 import GuessInput from "../GuessInput";
 import Guesses from "../Guesses";
-import BannerSuccess from "../BannerSuccess";
-import BannerFailure from "../BannerFailure";
+import WonBanner from "../BannerSuccess";
+import LostBanner from "../BannerFailure";
 import { NUM_OF_GUESSES_ALLOWED } from "../../constants";
-import { checkGuess } from "../../game-helpers";
 
 // Pick a random word on every pageload.
 const answer = sample(WORDS);
@@ -21,31 +20,15 @@ function Game() {
   function handleNewGuess(guess) {
     const newGuesses = [...guesses, guess];
     setGuesses(newGuesses);
-    checkGameCondition(newGuesses, guess);
-  }
-
-  function checkGameCondition(allGuesses, latestGuess) {
-    const checkedLatestGuess = checkGuess(latestGuess, answer);
-
-    if (
-      checkedLatestGuess &&
-      checkedLatestGuess.every((cell) => cell.status === "correct")
-    ) {
+    if (guess === answer) {
       setGamestate("won");
-      return;
-    }
-
-    if (allGuesses.length === NUM_OF_GUESSES_ALLOWED) {
+    } else if (newGuesses.length >= NUM_OF_GUESSES_ALLOWED) {
       setGamestate("lost");
     }
   }
 
   return (
     <>
-      {gameState === "won" && (
-        <BannerSuccess numOfGuesses={guesses.length}></BannerSuccess>
-      )}
-      {gameState === "lost" && <BannerFailure answer={answer}></BannerFailure>}
       <Guesses
         guesses={guesses}
         correctAnswer={answer}
@@ -55,6 +38,10 @@ function Game() {
         gamestate={gameState}
         handleNewGuess={handleNewGuess}
       ></GuessInput>
+      {gameState === "won" && (
+        <WonBanner numOfGuesses={guesses.length}></WonBanner>
+      )}
+      {gameState === "lost" && <LostBanner answer={answer}></LostBanner>}
     </>
   );
 }
