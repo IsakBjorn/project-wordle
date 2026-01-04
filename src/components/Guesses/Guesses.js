@@ -8,8 +8,7 @@ function Guesses({ guesses, correctAnswer }) {
   return (
     <div className="guess-results">
       {range(0, NUM_OF_GUESSES_ALLOWED).map((index) => {
-        const guess = guesses[index];
-        const checkedGuess = guess ? checkGuess(guess, correctAnswer) : null;
+        const checkedGuess = checkGuess(guesses[index], correctAnswer);
         return (
           <p className="guess" key={index}>
             <Guess checkedGuess={checkedGuess}></Guess>
